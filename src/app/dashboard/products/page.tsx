@@ -10,7 +10,7 @@ async function page() {
   return (
     <div className='p-4'>
       <CreateForm isAdmin={isAdmin} />
-      <ListOfProducts isAdmin={isAdmin} />
+      <ListOfProducts />
     </div>
   )
 }

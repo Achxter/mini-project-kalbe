@@ -10,6 +10,9 @@ export async function loginWithEmailAndPassword(data: {
 	const supabase = await createSupbaseServerClient();
 
 	const result = await supabase.auth.signInWithPassword(data);
+	if (result.error?.message) {
+		return { error: { message: result.error.message } };
+	}
 	return JSON.stringify(result);
 }
 

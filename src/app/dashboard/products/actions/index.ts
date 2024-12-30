@@ -3,6 +3,7 @@
 import { readUserSession } from "@/lib/actions";
 import { createSupbaseServerClient } from "@/lib/supabase"
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 interface FormDataProps {
   name: string;
@@ -54,10 +55,21 @@ export async function deleteProductById(product_id: string) {
     return JSON.stringify(deleteResult.error.message);
   } else {
     revalidatePath('/dashboard/products');
+    redirect('/dashboard/products');
     return JSON.stringify(deleteResult);
   }
 }
 export async function readProduct() {
   const supabase = await createSupbaseServerClient()
   return await supabase.from("products").select("*");
+}
+export async function readProductById(product_id: string) {
+  const supabase = await createSupbaseServerClient()
+  // return await supabase.from("products").select("*").eq("id", product_id);
+  const getResult = await supabase.from("products").select("*").eq("id", product_id);
+  if (getResult.error?.message) {
+    return JSON.stringify(getResult.error.message);
+  } else {
+    return getResult.data;
+  }
 }

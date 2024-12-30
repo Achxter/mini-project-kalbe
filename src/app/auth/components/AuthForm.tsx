@@ -16,7 +16,7 @@ export default function AuthForm() {
 
     startTransition(async () => {
       const { error } = await loginWithEmailAndPassword(data) as unknown as AuthTokenResponse;
-
+      console.log(error)
       if (error) {
         alert(`Fail to login: ${error.message}`);
       } else {

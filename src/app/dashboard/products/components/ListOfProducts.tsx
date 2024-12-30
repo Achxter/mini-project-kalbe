@@ -1,14 +1,9 @@
 'use server'
 import React from 'react'
 import { readProduct } from '../actions'
-import DeleteProduct from './DeleteProduct';
-import EditProduct from './EditProduct';
+import DetailProduct from './DetailProduct';
 
-interface ListOfProductsProps {
-  isAdmin: boolean;
-}
-
-async function ListOfProducts({ isAdmin }: ListOfProductsProps) {
+async function ListOfProducts() {
   const { data: products } = await readProduct();
 
   return (
@@ -19,7 +14,7 @@ async function ListOfProducts({ isAdmin }: ListOfProductsProps) {
           <tr>
             <th className="py-2 px-4 border-b">ID</th>
             <th className="py-2 px-4 border-b">Name</th>
-            <th className="py-2 px-4 border-b">Description</th>
+            {/* <th className="py-2 px-4 border-b">Description</th> */}
             <th className="py-2 px-4 border-b">Quantity</th>
             <th className="py-2 px-4 border-b">Price</th>
             <th className="py-2 px-4 border-b">Action</th>
@@ -31,18 +26,11 @@ async function ListOfProducts({ isAdmin }: ListOfProductsProps) {
               <tr key={index} className="bg-gray-800">
                 <td className="py-2 px-4 border-b">{product.id}</td>
                 <td className="py-2 px-4 border-b">{product.name}</td>
-                <td className="py-2 px-4 border-b">{product.description}</td>
+                {/* <td className="py-2 px-4 border-b">{product.description}</td> */}
                 <td className="py-2 px-4 border-b">{product.quantity}</td>
                 <td className="py-2 px-4 border-b">{product.price}</td>
                 <td className="py-2 px-4 border-b">
-                  <div className="mb-2">
-                    <EditProduct product_id={product.id} product={product} />
-                  </div>
-                  {isAdmin && (
-                    <div className="">
-                      <DeleteProduct product_id={product.id} />
-                    </div>
-                  )}
+                  <DetailProduct product_id={product.id} />
                 </td>
               </tr>
             )
